@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fractals_project/fractals/fractalJuliasSet.dart';
 import 'package:fractals_project/fractals/kochsFractal.dart';
 
 import '../animations/animatedKochsFractal.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,17 +35,13 @@ class _ZoomableObjectState extends State<ZoomableObject> {
             scale = details.scale;
           });
         },
-        child: Center(
-          child: Transform.scale(
-            scale: scale,
-            child: Container(
-              width: 1000.0,
-              height: 1000.0,
-              color: Colors.blue,
-              child: Center(
-                child: AnimatedKochsFractal()
-              ),
-            ),
+        child: Transform.scale(
+          scale: scale,
+          child: Container(
+            width: 500,
+            height: 500,
+            color: Colors.blue,
+            child: Center(child: JuliaSetWidget()),
           ),
         ),
       ),
