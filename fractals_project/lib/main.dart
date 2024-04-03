@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:fractals_project/fractals/kochsFractal.dart';
 
-import 'home.dart';
+import 'screens/home.dart';
 
 
 //

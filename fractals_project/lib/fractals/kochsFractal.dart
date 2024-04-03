@@ -9,17 +9,21 @@ class DrawTriangle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: TrianglePainter(),
+      painter: TrianglePainter(step: 10),
       size: Size(200, 200),
     );
   }
 }
 
 class TrianglePainter extends CustomPainter {
+  TrianglePainter({required this.step});
+
+  int step;
+
   @override
   void paint(Canvas canvas, Size size) {
     drawTriangle(canvas, size, Offset(size.width / 2, size.height / 2),
-        size.width * 0.6, 0, 1.5, Colors.lightBlue, 0.6, 0, 10);
+        size.width * 0.6, 0, 0.5, Colors.lightBlue, 0.6, 0, step);
   }
 
   void drawTriangle(
@@ -106,6 +110,7 @@ class TrianglePainter extends CustomPainter {
         }
         drawTriangle(canvas, size, newCenter, newSideLength, newRotation,
             thickness, color, shrinkSideBy, iteration + 1, maxDepth);
+
       }
     });
   }
@@ -127,7 +132,9 @@ class TrianglePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+  bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
+
+
 }
