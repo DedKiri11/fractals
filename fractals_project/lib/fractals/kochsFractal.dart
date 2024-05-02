@@ -1,29 +1,32 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawTriangle extends StatelessWidget {
-  const DrawTriangle({super.key});
+  final int step;
+  final double shrinkBy;
+
+  const DrawTriangle({super.key, required this.step, required this.shrinkBy});
+
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: TrianglePainter(step: 10),
+      painter: TrianglePainter(step: step, shrinkBy: shrinkBy),
       size: Size(200, 200),
     );
   }
 }
 
 class TrianglePainter extends CustomPainter {
-  TrianglePainter({required this.step});
-
+  TrianglePainter( {required this.step, required this.shrinkBy,});
+  final double shrinkBy;
   int step;
 
   @override
   void paint(Canvas canvas, Size size) {
     drawTriangle(canvas, size, Offset(size.width / 2, size.height / 2),
-        size.width * 0.6, 0, 0.5, Colors.lightBlue, 0.6, 0, step);
+        size.width * 0.6, 0, 0.5, Colors.lightBlue, shrinkBy, 0, step);
   }
 
   void drawTriangle(

@@ -17,6 +17,7 @@ class _AnimatedKochsFractalState extends State<AnimatedKochsFractal>  with Ticke
 
   late AnimationController controller;
   int step = 0;
+  double shrinkBy = 0.5;
 
   @override
   void initState() {
@@ -33,9 +34,9 @@ class _AnimatedKochsFractalState extends State<AnimatedKochsFractal>  with Ticke
       }
     });
 
-    final tween = IntTween(begin: 0, end: 13).animate(CurvedAnimation(
+    final tween = IntTween(begin: 0, end: 8).animate(CurvedAnimation(
       parent: controller,
-      curve: Curves.bounceIn,
+      curve: Curves.linear,
 
     ));
 
@@ -51,18 +52,13 @@ class _AnimatedKochsFractalState extends State<AnimatedKochsFractal>  with Ticke
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.black,
-      width: 1000,
-      height: 1000,
-      child: Transform.rotate(
+    return
+       Transform.rotate(
         angle: 0,
         child: CustomPaint(
-          painter: TrianglePainter(step: step),
-          size: Size(500, 500),
+          painter: TrianglePainter(step: step, shrinkBy: shrinkBy),
+          size: Size(300, 300),
         ),
-      ),
 
     );
   }
