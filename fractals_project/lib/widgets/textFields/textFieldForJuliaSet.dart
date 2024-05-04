@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TextFieldForJuliaSet extends StatefulWidget {
   const TextFieldForJuliaSet({super.key, required this.onTextChanged});
 
-  final Function(String, String) onTextChanged;
+  final Function(String, String, String) onTextChanged;
 
   @override
   State<TextFieldForJuliaSet> createState() => _TextFieldForJuliaSetState();
@@ -13,9 +13,12 @@ class TextFieldForJuliaSet extends StatefulWidget {
 class _TextFieldForJuliaSetState extends State<TextFieldForJuliaSet> {
   final String hintImaginary = "Imaginary part...";
   final String hintReal = "Real part...";
+  final String hintIterations = "Iterations...";
+
   final TextEditingController _controllerForImaginaryPart =
       TextEditingController();
   final TextEditingController _controllerForRealPart = TextEditingController();
+  final TextEditingController _controllerForIterations = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +51,21 @@ class _TextFieldForJuliaSetState extends State<TextFieldForJuliaSet> {
             ),
           ),
           Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _controllerForIterations,
+                decoration: InputDecoration(
+                  hintText: hintIterations,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
               child: FilledButton(
                 onPressed: () {
-                  widget.onTextChanged(_controllerForRealPart.text,
-                      _controllerForImaginaryPart.text);
+                  widget.onTextChanged(
+                      _controllerForImaginaryPart.text, _controllerForRealPart.text, _controllerForIterations.text);
                 },
                 child: Text("Generate"),
           ))
@@ -60,10 +74,6 @@ class _TextFieldForJuliaSetState extends State<TextFieldForJuliaSet> {
     );
   }
 
-  void _sendText() {
-    widget.onTextChanged(
-        _controllerForImaginaryPart.text, _controllerForRealPart.text);
-  }
 
   @override
   void dispose() {

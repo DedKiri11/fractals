@@ -63,7 +63,9 @@ class _AnimatedJuliaFractalState extends State<AnimatedJuliaFractal>
             return CustomPaint(
                 painter: JuliaSetPainter(
                     realPart: _animationForRealPart.evaluate(curve),
-                    imaginaryPart: _animationForImaginaryPart.evaluate(curve)));
+                    imaginaryPart: _animationForImaginaryPart.evaluate(curve),
+                    iterations: 100,
+                    color: Colors.red));
           }
         )
     );
