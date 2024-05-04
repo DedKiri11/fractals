@@ -4,16 +4,28 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class JuliaSetWidget extends StatelessWidget {
+class JuliaSetWidget extends StatefulWidget {
+  final double realPart;
+  final double imaginaryPart;
+
+  JuliaSetWidget(this.realPart, this.imaginaryPart, {super.key});
+
+  @override
+  State<JuliaSetWidget> createState() => _JuliaSetWidgetState();
+}
+
+class _JuliaSetWidgetState extends State<JuliaSetWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(MediaQuery.of(context).size.height , MediaQuery.of(context).size.height ),
+      size: Size(
+          MediaQuery.of(context).size.width, MediaQuery.of(context).size.width),
       //(realPart: 0.285, imaginaryPart: 0.01) (realPart: -0.085, imaginaryPart: 0.71) (realPart: -0.74543, imaginaryPart: 0.11031)
       //painter: JuliaSetPainter(realPart: -0.8, imaginaryPart: 0.156),
       //painter: JuliaSetPainter(realPart: 0.285, imaginaryPart: 0.01),
-      painter: JuliaSetPainter(realPart: -0.085, imaginaryPart: 0.71),
-     // painter: JuliaSetPainter(realPart: -0.74543, imaginaryPart: 0.11031),
+      painter: JuliaSetPainter(
+          realPart: widget.realPart, imaginaryPart: widget.imaginaryPart),
+      // painter: JuliaSetPainter(realPart: -0.74543, imaginaryPart: 0.11031),
     );
   }
 }
@@ -26,10 +38,8 @@ class JuliaSetPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    ComplexNumber c = ComplexNumber(realPart,
-        imaginaryPart);
-    XBitmap bmp = plotJuliaSet(c, size.width.toInt(), size.height.toInt(),
-        100);
+    ComplexNumber c = ComplexNumber(realPart, imaginaryPart);
+    XBitmap bmp = plotJuliaSet(c, size.width.toInt(), size.height.toInt(), 100);
 
     for (int i = 0; i < bmp.pixels.length; i++) {
       for (int j = 0; j < bmp.pixels[i].length; j++) {
@@ -123,7 +133,7 @@ XBitmap plotJuliaSet(ComplexNumber c, int w, int h, int maxIter,
       double y = yMin + j * yStep;
       ComplexNumber z = ComplexNumber(x, y);
       bmp.setPixel(w - i - 1, j,
-          complexHeatMap(idx!.toDouble(), 0, maxIdx.toDouble(), z*z, r));
+          complexHeatMap(idx!.toDouble(), 0, maxIdx.toDouble(), z * z, r));
     }
   }
 
@@ -145,7 +155,7 @@ List<ComplexNumber> sqPolyIteration(
 }
 
 double calculateR(ComplexNumber c) {
-  return (1 + sqrt(1 + 4 * c.mod))/2;
+  return (1 + sqrt(1 + 4 * c.mod)) / 2;
 }
 
 Color complexHeatMap(
