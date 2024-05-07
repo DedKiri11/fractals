@@ -21,7 +21,7 @@ class _JuliaSetWidgetState extends State<JuliaSetWidget> {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(
-          500, 500,),
+          MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
       //(realPart: 0.285, imaginaryPart: 0.01) (realPart: -0.085, imaginaryPart: 0.71) (realPart: -0.74543, imaginaryPart: 0.11031)
       //painter: JuliaSetPainter(realPart: -0.8, imaginaryPart: 0.156),
       //painter: JuliaSetPainter(realPart: 0.285, imaginaryPart: 0.01),

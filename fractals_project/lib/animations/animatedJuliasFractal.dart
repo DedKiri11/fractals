@@ -53,10 +53,10 @@ class _AnimatedJuliaFractalState extends State<AnimatedJuliaFractal>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width /4,
-      height: MediaQuery.of(context).size.width /4,
-      // child: ClipOval(
-      //    clipBehavior: Clip.hardEdge,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.width,
+       child: ClipOval(
+          clipBehavior: Clip.hardEdge,
       child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
@@ -68,6 +68,7 @@ class _AnimatedJuliaFractalState extends State<AnimatedJuliaFractal>
                     color: Colors.red));
           }
         )
+    ),
     );
   }
 
