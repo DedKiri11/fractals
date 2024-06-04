@@ -8,7 +8,6 @@ class DrawTriangle extends StatelessWidget {
 
   const DrawTriangle({super.key, required this.step, required this.shrinkBy});
 
-
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -19,7 +18,10 @@ class DrawTriangle extends StatelessWidget {
 }
 
 class TrianglePainter extends CustomPainter {
-  TrianglePainter( {required this.step, required this.shrinkBy,});
+  TrianglePainter({
+    required this.step,
+    required this.shrinkBy,
+  });
   final double shrinkBy;
   int step;
 
@@ -40,7 +42,6 @@ class TrianglePainter extends CustomPainter {
       double shrinkSideBy,
       int iteration,
       int maxDepth) {
-
     double triangleHeight = (sideLength * sqrt(3) / 2);
 
     Offset topSide = Offset(center.dx, center.dy - triangleHeight / 2);
@@ -113,7 +114,6 @@ class TrianglePainter extends CustomPainter {
         }
         drawTriangle(canvas, size, newCenter, newSideLength, newRotation,
             thickness, color, shrinkSideBy, iteration + 1, maxDepth);
-
       }
     });
   }
@@ -138,6 +138,4 @@ class TrianglePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
-
 }

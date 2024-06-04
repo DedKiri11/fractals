@@ -10,7 +10,8 @@ class JuliaSetWidget extends StatefulWidget {
   final Color color;
   final int iterations;
 
-  JuliaSetWidget(this.realPart, this.imaginaryPart, this.iterations, {super.key, required this.color});
+  JuliaSetWidget(this.realPart, this.imaginaryPart, this.iterations,
+      {super.key, required this.color});
 
   @override
   State<JuliaSetWidget> createState() => _JuliaSetWidgetState();
@@ -21,13 +22,14 @@ class _JuliaSetWidgetState extends State<JuliaSetWidget> {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(
-          MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
-      //(realPart: 0.285, imaginaryPart: 0.01) (realPart: -0.085, imaginaryPart: 0.71) (realPart: -0.74543, imaginaryPart: 0.11031)
-      //painter: JuliaSetPainter(realPart: -0.8, imaginaryPart: 0.156),
-      //painter: JuliaSetPainter(realPart: 0.285, imaginaryPart: 0.01),
+        4030,
+        4030,
+      ),
       painter: JuliaSetPainter(
-          realPart: widget.realPart, imaginaryPart: widget.imaginaryPart, color: widget.color, iterations: widget.iterations),
-      // painter: JuliaSetPainter(realPart: -0.74543, imaginaryPart: 0.11031),
+          realPart: widget.realPart,
+          imaginaryPart: widget.imaginaryPart,
+          color: widget.color,
+          iterations: widget.iterations),
     );
   }
 }
@@ -37,13 +39,19 @@ class JuliaSetPainter extends CustomPainter {
   final double imaginaryPart;
   final Color color;
   final int iterations;
+  int colorIteration = 0;
 
-  JuliaSetPainter({required this.realPart, required this.imaginaryPart, required this.color, required this.iterations});
+  JuliaSetPainter(
+      {required this.realPart,
+      required this.imaginaryPart,
+      required this.color,
+      required this.iterations});
 
   @override
   void paint(Canvas canvas, Size size) {
     ComplexNumber c = ComplexNumber(realPart, imaginaryPart);
-    XBitmap bmp = plotJuliaSet(c, size.width.toInt(), size.height.toInt(), iterations, color);
+    XBitmap bmp = plotJuliaSet(
+        c, size.width.toInt(), size.height.toInt(), iterations, color);
 
     for (int i = 0; i < bmp.pixels.length; i++) {
       for (int j = 0; j < bmp.pixels[i].length; j++) {
@@ -136,8 +144,11 @@ XBitmap plotJuliaSet(ComplexNumber c, int w, int h, int maxIter, Color color,
       double x = xMin + i * xStep;
       double y = yMin + j * yStep;
       ComplexNumber z = ComplexNumber(x, y);
-      bmp.setPixel(w - i - 1, j,
-          complexHeatMap(idx!.toDouble(), 0, maxIdx.toDouble(), z * z, r, color));
+      bmp.setPixel(
+          w - i - 1,
+          j,
+          complexHeatMap(
+              idx!.toDouble(), 0, maxIdx.toDouble(), z * z, r, color));
     }
   }
 
@@ -162,11 +173,12 @@ double calculateR(ComplexNumber c) {
   return (1 + sqrt(1 + 4 * c.mod)) / 2;
 }
 
-Color complexHeatMap(
-    double value, double min, double max, ComplexNumber z, double r, Color color) {
+Color complexHeatMap(double value, double min, double max, ComplexNumber z,
+    double r, Color color) {
   double val = (value - min) / (max - min);
-  int red = (color.red * val).round();
-  int green = color.green;
-  int blue = (color.blue * (z.mod / r > 1 ? 1 : z.mod / r)).round();
+  int red = (val * color.red).toInt();
+  int green = (val * color.green).toInt();
+  int blue = (val * color.blue).toInt();
+
   return Color.fromRGBO(red, green, blue, 1);
 }
